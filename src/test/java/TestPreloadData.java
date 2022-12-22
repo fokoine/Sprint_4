@@ -1,3 +1,4 @@
+import org.junit.After;
 import org.junit.Before;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -18,8 +19,8 @@ public class TestPreloadData {
                 .until(ExpectedConditions.elementToBeClickable(By.xpath("//button[text() ='Заказать']")));
         }
 
-//    @After
-//    public void tearDown() {
-//        driver.quit();
-//    }
+    @After
+    public void tearDown() {
+        driver.quit();
+    }
 }
