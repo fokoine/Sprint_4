@@ -4,7 +4,10 @@ import org.junit.runners.Parameterized;
 import ru.praktikum.MainPageObj;
 import ru.praktikum.OrderProcessObj;
 
-    @RunWith(Parameterized.class)
+import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.MatcherAssert.assertThat;
+
+@RunWith(Parameterized.class)
     public class ParametrizedTopCreateCheckTest extends TestPreloadData {
         private final String nameField;
         private final String surnameField;
@@ -36,7 +39,7 @@ import ru.praktikum.OrderProcessObj;
         }
 
         @Test
-        public void ParametrizedTopCreateCheck () {
+        public void parametrizedTopCreateCheck () {
             MainPageObj obkMainPage = new MainPageObj(driver);
             obkMainPage.clickTopButton();
             OrderProcessObj obkOrderProc = new OrderProcessObj(driver);
@@ -46,6 +49,7 @@ import ru.praktikum.OrderProcessObj;
             obkOrderProc.setSecondTextFields(dateArrival, arendPeriod, colourField, commentField);
             obkOrderProc.clickOrderFinishButton();
             obkOrderProc.approveFinishPopUp();
+            assertThat(obkOrderProc.confirmedOrderPopUp(), containsString("Номер заказа"));
         }
 
     }

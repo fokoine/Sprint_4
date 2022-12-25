@@ -12,25 +12,38 @@ public class MainPageObj {
     public MainPageObj(WebDriver driver){
         this.driver = driver;
     }
+    // Позиция печенья
+    private By cookiePlace = By.className("App_CookieButton__3cvqF");
+    // Позиция кнопки создания заявки верх
+    private By orderButtonTop = By.xpath("//div[@class = 'Header_Nav__AGCXC']/button[text() = 'Заказать']");
+    // Позиция кнопки создания заявки низ
+    private By orderButtonBottom = By.xpath("//div[@class = 'Home_FinishButton__1_cWm']/button[@class = 'Button_Button__ra12g Button_Middle__1CSJM']");
     // Поиск и проверка меню "Вопросы и ответы"
     public void checkQAMenu(int rowCount) {
-        WebElement element = driver.findElement(By.className("App_CookieButton__3cvqF"));
-        ((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView();", element);
-        driver.findElement(By.className("App_CookieButton__3cvqF")).click();
         new WebDriverWait(driver, 3)
                 .until(ExpectedConditions.visibilityOfElementLocated(By.id("accordion__heading-7")));
-        for (int i = 0; i < rowCount; i++) {
-            driver.findElement(By.id("accordion__heading-" + i + "")).click();
-        }
+        driver.findElement(By.id("accordion__heading-" + rowCount + "")).click();
+    }
+    // Поиск и проверка содержания текста для заголовка выпадайки
+    public String checkQAMenuContentTitle(int rowCountTitle) {
+        return driver.findElement(By.xpath("//div[@id = 'accordion__heading-" + rowCountTitle + "']")).getText();
+    }
+    // Поиск и проверка содержания текста в выпадайке
+    public String checkQAMenuContentInnerContent(int rowCountInner) {
+        return driver.findElement(By.xpath("//div[@aria-labelledby = 'accordion__heading-" + rowCountInner + "']/p")).getText();    }
+    public void clickCookieButton() {
+        WebElement element = driver.findElement(cookiePlace);
+        ((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView();", element);
+        driver.findElement(cookiePlace).click();
     }
     // Кнопка "Заказать" верхняя
     public void clickTopButton() {
-        driver.findElement(By.xpath("//div[@class = 'Header_Nav__AGCXC']/button[text() = 'Заказать']")).click();
+        driver.findElement(orderButtonTop).click();
     }
     // Кнопка "Заказать" нижняя
     public void clickBottomButton() {
-        WebElement element = driver.findElement(By.xpath("//div[@class = 'Home_FinishButton__1_cWm']"));
+        WebElement element = driver.findElement(orderButtonBottom);
         ((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView();", element);
-        driver.findElement(By.xpath("//div[@class = 'Home_FinishButton__1_cWm']/button[@class = 'Button_Button__ra12g Button_Middle__1CSJM']")).click();
+        driver.findElement(orderButtonBottom).click();
     }
 }
